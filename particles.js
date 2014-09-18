@@ -17,6 +17,10 @@ define(function () {
         startVelocities[offset + 2] = 2e-3 * (Math.random() - 0.5);
     }
 
+    for (var i = 0; i < N; ++i) {
+        startTimes[i] = i / N * 1.5e3;
+    }
+
     var ctx = document.querySelector('canvas').getContext('2d');
     ctx.canvas.width = 640;
     ctx.canvas.height = 480;
@@ -30,6 +34,7 @@ define(function () {
                 ++i, offset += 3
             ) {
                 var dt = (time - startTimes[i]);
+                dt = dt > 0 ? dt : 0;
                 positions[offset]     = dt * startVelocities[offset]
                 positions[offset + 1] = dt * startVelocities[offset + 1] - G * dt * dt;
                 positions[offset + 2] = dt * startVelocities[offset + 2];
@@ -40,7 +45,7 @@ define(function () {
                     positions[offset + 2] = 0;
 
                     startVelocities[offset]     = 2e-3 * (Math.random() - 0.5);
-                    startVelocities[offset + 1] = 7e-3 + Math.random() * 1e-3;
+                    startVelocities[offset + 1] = 5e-3 + Math.random() * 5e-3 * Math.sin(time / 1000);
                     startVelocities[offset + 2] = 2e-3 * (Math.random() - 0.5);
 
                     startTimes[i] = time;
